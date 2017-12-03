@@ -32,6 +32,10 @@ func GetRoute(router *mux.Router, routeName string, vals ...string) string {
 func ChangeLanguage(req *http.Request, res http.ResponseWriter, store sessions.Store) {
 	lang := req.FormValue("lang")
 	session, _ := store.Get(req, "goladius")
+	// If session not created yet
+	if session.Values["language"] == nil {
+		session.Values["language"] = "English"
+	}
 	// Set some session values.
 	if lang == "en" {
 		session.Values["language"] = "English"
